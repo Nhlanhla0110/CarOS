@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050609"><meta name="description" content="VENOM OS vehicle cockpit simulator">
+<title>VENOM OS — Cockpit Simulator</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="screen" class="screen">
+  <div id="brightnessLayer"></div>
+  <div class="ambient"></div>
+  <header class="topbar">
+    <div class="brand"><span class="brand-dot"></span><b>VENOM</b><span>OS</span></div>
+    <div class="status-icons"><span id="driveStatus">P</span><span>5G</span><span>BT</span><span id="signal">●●●</span><span id="clock">--:--</span></div>
+  </header>
+
+  <main id="main">
+    <section class="view active" data-view="home">
+      <div class="hero-row">
+        <div class="drive-card">
+          <div class="eyebrow">DRIVE</div><div class="speed"><span id="speed">0</span><small>km/h</small></div>
+          <div class="drive-meta"><span id="gear">P</span><span>RANGE <b id="range">420</b> km</span></div>
+        </div>
+        <div class="weather-card"><div class="eyebrow">CAPE TOWN</div><strong id="outsideTemp">19°</strong><span>Clear · 12 km/h</span></div>
+      </div>
+
+      <div class="cockpit-grid">
+        <div class="car-card panel" id="carCard">
+          <div class="panel-head"><div><span class="eyebrow">VEHICLE STATUS</span><h2>RUMION // VENOM EDITION</h2></div><button class="icon-btn" data-action="vehicle">↗</button></div>
+          <div class="car-visual-wrap">
+            <svg class="car-visual" viewBox="0 0 620 310" aria-label="interactive vehicle diagram">
+              <defs><linearGradient id="carLine" x1="0" x2="1"><stop stop-color="#ff3154"/><stop offset=".5" stop-color="#a8abb5"/><stop offset="1" stop-color="#ff3154"/></linearGradient></defs>
+              <ellipse cx="310" cy="270" rx="205" ry="16" class="shadow"/>
+              <path d="M128 229 C135 172 167 135 229 116 L268 70 Q311 48 353 70 L391 116 C452 133 484 172 492 229 L474 250 L146 250 Z" class="car-outline"/>
+              <path d="M239 116 L269 79 Q310 61 351 79 L381 116 Z" class="glass"/>
+              <path d="M274 82 Q310 67 346 82 L357 112 L263 112 Z" class="sunroof"/>
+              <path d="M158 185 Q194 159 229 154 M462 185 Q426 159 391 154" class="body-detail"/>
+              <rect x="116" y="177" width="30" height="62" rx="9" class="wheel"/><rect x="474" y="177" width="30" height="62" rx="9" class="wheel"/>
+              <rect x="150" y="230" width="58" height="14" rx="6" class="tyre"/><rect x="412" y="230" width="58" height="14" rx="6" class="tyre"/>
+              <circle cx="310" cy="151" r="22" class="engine-dot" id="engineHotspot"/>
+              <text x="310" y="157" text-anchor="middle" class="hotspot-text">V</text>
+            </svg>
+            <div class="car-hotspots">
+              <button data-action="sunroof">SUNROOF<br><b id="sunroofMini">65%</b></button>
+              <button data-action="vehicle">TPMS<br><b id="tpmsMini">34 / 33</b></button>
+              <button data-action="diagnostics">ENGINE<br><b id="engineMini">91°C</b></button>
+            </div>
+          </div>
+          <div class="status-strip"><span class="ok">● SYSTEMS NORMAL</span><span>Doors locked</span><span>Seatbelts ready</span></div>
+        </div>
+
+        <div class="side-stack">
+          <div class="panel fuel-panel"><div class="panel-head"><span class="eyebrow">FUEL SYSTEM</span><button class="text-btn" data-action="settings">CONFIG</button></div>
+            <div class="fuel-main"><div class="fuel-ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="49" class="ring-bg"/><circle cx="60" cy="60" r="49" class="ring-fill" id="fuelRing"/></svg><div><b id="fuelValue">62</b><small>%</small></div></div><div><div class="fuel-label" id="fuelState">NORMAL</div><span class="muted">Estimated range</span><strong><span id="range2">420</span> km</strong></div></div>
+            <div class="fuel-bar"><i id="fuelBar"></i></div><div class="tiny-row"><span>RESERVE AT <b id="reserveLabel">20%</b></span><span>TANK <b>45 L</b></span></div>
+          </div>
+          <div class="panel climate-mini"><div class="panel-head"><span class="eyebrow">CABIN</span><span class="live-dot">LIVE</span></div><div class="climate-values"><div><small>DRIVER</small><b id="driverTemp">22°</b></div><div><small>FAN</small><b id="fanMini">2</b></div><div><small>A/C</small><b id="acMini">ON</b></div></div><button class="wide-btn" data-action="climate">CLIMATE CONTROL <span>›</span></button></div>
+        </div>
+      </div>
+
+      <div class="quick-row">
+        <button data-action="climate"><span>❄</span><small>CLIMATE</small><b>22°</b></button>
+        <button data-action="media"><span>♫</span><small>MEDIA</small><b>42%</b></button>
+        <button data-action="sunroof"><span>⌁</span><small>SUNROOF</small><b id="sunroofQuick">65%</b></button>
+        <button data-action="camera"><span>▣</span><small>CAMERA</small><b>360°</b></button>
+        <button data-action="settings"><span>⚙</span><small>SETTINGS</small><b>Custom</b></button>
+      </div>
+    </section>
+
+    <section class="view" data-view="climate"><div class="view-head"><button class="back" data-action="home">‹</button><div><span class="eyebrow">COMFORT</span><h1>Climate Control</h1></div><span class="page-status">A/C <b id="acPage">ON</b></span></div>
+      <div class="climate-layout"><div class="temp-control panel"><span class="eyebrow">DRIVER ZONE</span><div class="temp-big"><button data-temp="-">−</button><strong id="climateTemp">22</strong><small>°C</small><button data-temp="+">+</button></div><div class="slider"><i id="tempSlider"></i></div><div class="temp-range"><span>16°</span><span>30°</span></div></div>
+      <div class="panel controls-panel"><div class="toggle-line"><span>A/C compressor</span><button class="toggle on" id="acToggle"><i></i></button></div><div class="toggle-line"><span>Recirculate cabin air</span><button class="toggle" id="recircToggle"><i></i></button></div><div class="section-label">FAN SPEED</div><div class="seg-row" id="fanControls"><button>OFF</button><button>1</button><button class="active">2</button><button>3</button><button>4</button></div><div class="section-label">AIRFLOW</div><div class="airflow-grid"><button class="active" data-air="face">◉<span>Face</span></button><button data-air="feet">↓<span>Feet</span></button><button data-air="both">◉↓<span>Face + Feet</span></button><button data-air="defrost">△<span>Defrost</span></button></div></div></div>
+      <div class="seat-row"><button class="seat active">DRIVER<br><b>22°C</b></button><button class="seat">PASSENGER<br><b>22°C</b></button><button class="seat">REAR<br><b>OFF</b></button></div>
+    </section>
+
+    <section class="view" data-view="sunroof"><div class="view-head"><button class="back" data-action="home">‹</button><div><span class="eyebrow">ROOF SYSTEM</span><h1>Panoramic Sunroof</h1></div><span class="page-status">AUTO</span></div>
+      <div class="sunroof-stage panel"><div class="roof-visual"><div class="roof-glass"><div class="roof-slit"></div></div><div class="roof-status"><span>GLASS</span><b id="roofPercent">65%</b></div></div><div class="roof-controls"><button data-roof="close">CLOSE</button><button data-roof="vent">VENT</button><button class="active" data-roof="open">OPEN</button></div><div class="roof-slider"><input id="roofSlider" type="range" min="0" max="100" value="65"><div><span>0%</span><span>OPENING</span><span>100%</span></div></div></div>
+      <div class="sunroof-options"><div class="panel"><div class="toggle-line"><span>Auto close when locked</span><button class="toggle on"><i></i></button></div><div class="toggle-line"><span>Rain protection</span><button class="toggle on"><i></i></button></div><div class="toggle-line"><span>Anti-pinch protection</span><button class="toggle on"><i></i></button></div></div><div class="panel shade"><span class="eyebrow">SUNSHADE</span><div class="shade-row"><button data-shade="-">−</button><strong id="shadePercent">35%</strong><button data-shade="+">+</button></div></div></div>
+    </section>
+
+    <section class="view" data-view="media"><div class="view-head"><button class="back" data-action="home">‹</button><div><span class="eyebrow">ENTERTAINMENT</span><h1>Media</h1></div><span class="page-status">BT AUDIO</span></div><div class="media-layout"><div class="panel now-playing"><div class="album">V</div><span class="eyebrow">NOW PLAYING</span><h2>VENOM DRIVE</h2><p>Bluetooth Audio · Phone</p><div class="progress"><i></i></div><div class="track-time"><span>1:24</span><span>3:48</span></div><div class="transport"><button>↶</button><button class="play">▶</button><button>↷</button></div></div><div class="panel volume-panel"><div class="panel-head"><span class="eyebrow">VOLUME</span><b id="volumeValue">42%</b></div><input id="volumeSlider" type="range" min="0" max="100" value="42"><div class="eq"><span>EQ</span><button class="active">VENOM</button><button>FLAT</button><button>BASS</button><button>VOICE</button></div><div class="toggle-line"><span>Speed volume compensation</span><button class="toggle on"><i></i></button></div></div></div></section>
+
+    <section class="view" data-view="camera"><div class="view-head"><button class="back" data-action="home">‹</button><div><span class="eyebrow">VISION SYSTEM</span><h1>360° Camera</h1></div><span class="page-status">LIVE</span></div><div class="camera-grid"><div class="camera-feed panel"><div class="camera-lines"></div><div class="camera-car"></div><span>REAR CAMERA · 1920×1080</span><div class="camera-warning">CHECK SURROUNDINGS</div></div><div class="panel camera-controls"><button class="active">360°</button><button>REAR</button><button>FRONT</button><button>LEFT</button><button>RIGHT</button><div class="parking"><span>Parking sensors</span><b>ON</b></div><div class="parking"><span>Guidelines</span><b>ON</b></div></div></div></section>
+
+    <section class="view" data-view="vehicle"><div class="view-head"><button class="back" data-action="home">‹</button><div><span class="eyebrow">VEHICLE</span><h1>Vehicle Status</h1></div><span class="page-status ok">ALL SYSTEMS OK</span></div><div class="diag-grid"><div class="panel diag-card"><span class="eyebrow">TYRE PRESSURE</span><div class="tpms"><div><b>34</b><small>FL PSI</small></div><div><b>33</b><small>FR PSI</small></div><div><b>35</b><small>RL PSI</small></div><div><b>34</b><small>RR PSI</small></div></div></div><div class="panel diag-card"><span class="eyebrow">ENGINE</span><div class="big-status"><b id="engineTemp">91°C</b><span>Coolant temperature</span></div><div class="mini-bar"><i style="width:48%"></i></div><span class="ok">● NORMAL</span></div><div class="panel diag-card"><span class="eyebrow">ELECTRICAL</span><div class="spec-list"><span>Battery <b>12.6 V</b></span><span>Alternator <b>14.2 V</b></span><span>12V system <b>Stable</b></span></div></div><div class="panel diag-card"><span class="eyebrow">BODY</span><div class="body-status"><span>Doors <b>LOCKED</b></span><span>Bonnet <b>CLOSED</b></span><span>Boot <b>CLOSED</b></span><span>Seatbelts <b>READY</b></span></div></div></div></section>
+
+    <section class="view" data-view="settings"><div class="view-head"><button class="back" data-action="home">‹</button><div><span class="eyebrow">SYSTEM</span><h1>Settings</h1></div><span class="page-status">VENOM 1.0</span></div><div class="settings-grid"><div class="panel setting-group"><span class="eyebrow">DISPLAY</span><div class="setting-line"><span>Brightness</span><strong id="brightnessValue">72%</strong></div><input id="brightnessSlider" type="range" min="20" max="100" value="72"><div class="setting-line"><span>Ambient theme</span><strong>VENOM DARK</strong></div><div class="theme-row"><button class="active">VENOM</button><button>STEALTH</button><button>ICE</button></div></div><div class="panel setting-group"><span class="eyebrow">FUEL WARNING</span><div class="setting-line"><span>Reserve threshold</span><strong id="reserveValue">20%</strong></div><input id="reserveSlider" type="range" min="5" max="40" value="20"><div class="setting-line"><span>Critical threshold</span><strong>8%</strong></div><input type="range" min="2" max="15" value="8"><div class="setting-line"><span>Warning label</span><strong>RESERVE</strong></div></div><div class="panel setting-group"><span class="eyebrow">DRIVE MODE</span><div class="drive-modes"><button>COMFORT</button><button class="active">NORMAL</button><button>SPORT</button><button>CUSTOM</button></div><div class="setting-line"><span>Regenerative / engine response</span><strong>Balanced</strong></div></div><div class="panel setting-group"><span class="eyebrow">PERSONALIZATION</span><div class="setting-line"><span>Driver profile</span><strong>NHLANHLA</strong></div><div class="setting-line"><span>Startup animation</span><button class="toggle on"><i></i></button></div><div class="setting-line"><span>Welcome sound</span><button class="toggle on"><i></i></button></div></div></div></section>
+
+    <section class="view" data-view="diagnostics"><div class="view-head"><button class="back" data-action="home">‹</button><div><span class="eyebrow">ENGINEERING</span><h1>Diagnostics</h1></div><span class="page-status ok">0 FAULTS</span></div><div class="diag-grid"><div class="panel diag-card"><span class="eyebrow">LIVE DATA</span><div class="spec-list"><span>Vehicle speed <b id="diagSpeed">0 km/h</b></span><span>Engine RPM <b id="rpm">720</b></span><span>Coolant <b>91°C</b></span><span>Oil <b>96°C</b></span><span>Throttle <b>0%</b></span></div></div><div class="panel diag-card"><span class="eyebrow">SENSORS</span><div class="sensor-grid"><span>Rain <b>READY</b></span><span>Light <b>AUTO</b></span><span>Parking <b>ACTIVE</b></span><span>TPMS <b>4/4 OK</b></span><span>Doors <b>4/4 CLOSED</b></span><span>Sunroof <b id="diagRoof">65%</b></span></div></div><div class="panel diag-card full"><span class="eyebrow">CUSTOM VEHICLE SIMULATOR</span><p class="muted">Use these controls to simulate vehicle conditions and see the UI react.</p><div class="sim-grid"><label>Speed <input id="simSpeed" type="range" min="0" max="220" value="0"><b id="simSpeedVal">0</b></label><label>Fuel <input id="simFuel" type="range" min="0" max="100" value="62"><b id="simFuelVal">62%</b></label><label>Engine temp <input id="simEngine" type="range" min="60" max="130" value="91"><b id="simEngineVal">91°C</b></label><label>Outside temp <input id="simOutside" type="range" min="-5" max="45" value="19"><b id="simOutsideVal">19°C</b></label></div></div></div></section>
+
+    <section class="view" data-view="apps"><div class="view-head"><button class="back" data-action="home">‹</button><div><span class="eyebrow">VENOM OS</span><h1>All Functions</h1></div></div><div class="app-grid"><button data-action="climate">❄<span>Climate</span></button><button data-action="sunroof">⌁<span>Sunroof</span></button><button data-action="media">♫<span>Media</span></button><button data-action="camera">▣<span>Camera</span></button><button data-action="vehicle">◈<span>Vehicle</span></button><button data-action="diagnostics">⌘<span>Diagnostics</span></button><button data-action="settings">⚙<span>Settings</span></button><button>☎<span>Phone</span></button><button>⌖<span>Navigation</span></button><button>◉<span>Voice</span></button><button>☼<span>Ambient Light</span></button><button>▣<span>Browser</span></button></div></section>
+  </main>
+
+  <nav class="dock"><button class="dock-btn active" data-action="home"><span>⌂</span>HOME</button><button class="dock-btn" data-action="climate"><span>❄</span>CLIMATE</button><button class="dock-btn" data-action="media"><span>♫</span>MEDIA</button><button class="dock-btn" data-action="camera"><span>▣</span>CAMERA</button><button class="dock-btn" data-action="apps"><span>⋮⋮</span>APPS</button></nav>
+
+  <div id="boot" class="boot"><div class="boot-logo">VENOM<span>OS</span></div><div class="boot-sub">SMART COCKPIT SYSTEM</div><div class="boot-bar"><i></i></div><button id="startBtn">TOUCH TO START</button></div>
+  <div id="toast" class="toast"></div>
+</div>
+<script src="js/app.js"></script>
+</body></html>
